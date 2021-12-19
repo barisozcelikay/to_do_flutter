@@ -3,9 +3,12 @@
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class AddNewTaskScreen extends StatelessWidget {
-  TextEditingController _titleController = TextEditingController();
-  TextEditingController _paragraphController = TextEditingController();
+class AddTaskScreen extends StatelessWidget {
+  final Function(String, String) callBack;
+  AddTaskScreen({required this.callBack});
+
+  late String title;
+  late String paragraph;
 
   @override
   Widget build(BuildContext context) {
@@ -49,18 +52,27 @@ class AddNewTaskScreen extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
+                    autofocus: true,
+                    textAlign: TextAlign.center,
+                    textDirection: TextDirection.ltr,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(), hintText: 'Enter title'),
-                    controller: _titleController,
+                    onChanged: (newTitle) {
+                      title = newTitle;
+                    },
                   ),
                 ),
                 Container(
                   margin: EdgeInsets.only(right: 20, left: 20, top: 30),
                   child: TextField(
+                    autofocus: true,
+                    textAlign: TextAlign.center,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Enter paragraph'),
-                    controller: _paragraphController,
+                    onChanged: (newParagraph) {
+                      paragraph = newParagraph;
+                    },
                   ),
                 ),
                 SizedBox(
@@ -70,10 +82,7 @@ class AddNewTaskScreen extends StatelessWidget {
                   margin: EdgeInsets.only(top: 20, bottom: 20),
                   child: FloatingActionButton(
                       backgroundColor: Colors.lightGreen,
-                      onPressed: () {
-                        // ignore: avoid_print
-                        print("eklendi");
-                      },
+                      onPressed: () => callBack(title, paragraph),
                       child: Icon(Icons.add)),
                 )
               ],

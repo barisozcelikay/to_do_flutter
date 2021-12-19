@@ -1,14 +1,18 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, file_names, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:to_do/Screens/taskInfoScreen.dart';
 
-class MyTodoWidget extends StatelessWidget {
+class TaskTile extends StatelessWidget {
   final bool isChecked;
   final String taskTitle;
-  final DateTime date;
+  final DateTime date = DateTime.now();
+  final Function(bool?) checkBoxCallBack;
 
-  MyTodoWidget(
-      {required this.isChecked, required this.taskTitle, required this.date});
+  TaskTile(
+      {required this.isChecked,
+      required this.taskTitle,
+      required this.checkBoxCallBack});
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +37,19 @@ class MyTodoWidget extends StatelessWidget {
               width: 10,
             ),
             // ignore: prefer_const_constructors
-            Icon(Icons.keyboard_arrow_right)
+            InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TaskInfoScreen()),
+                  );
+                },
+                child: Icon(Icons.keyboard_arrow_right))
           ],
         ),
         trailing: Checkbox(
           activeColor: Colors.lightGreen,
-          value: isChecked, onChanged: (bool? value) {},
+          value: isChecked, onChanged: checkBoxCallBack,
           //onChanged: toggleCheckBoxState,
         ),
       ),

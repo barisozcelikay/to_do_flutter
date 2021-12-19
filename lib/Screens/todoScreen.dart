@@ -2,18 +2,19 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:to_do/taskList.dart';
+import 'package:to_do/Widgets/taskList.dart';
 
-import 'addNewTaskScreen.dart';
+import '../Class/task.dart';
+import 'addTaskScreen.dart';
 
 class TodoScreen extends StatefulWidget {
-  const TodoScreen({Key? key}) : super(key: key);
-
   @override
   _TodoScreenState createState() => _TodoScreenState();
 }
 
 class _TodoScreenState extends State<TodoScreen> {
+  List<Task> tasks = [];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,10 +28,14 @@ class _TodoScreenState extends State<TodoScreen> {
         body: Column(children: [
           Expanded(
             flex: 6,
-            child: Container(
-              padding: EdgeInsets.only(top: 20),
-              child: TasksList(),
-            ),
+            child: tasks.length > 0
+                ? Container(
+                    padding: EdgeInsets.only(top: 20),
+                    child: TasksList(tasks: tasks),
+                  )
+                : Center(
+                    child: Text("No Tasks"),
+                  ),
           ),
           Expanded(
             flex: 1,
@@ -50,7 +55,17 @@ class _TodoScreenState extends State<TodoScreen> {
                                       bottom: MediaQuery.of(context)
                                           .viewInsets
                                           .bottom),
-                                  child: AddNewTaskScreen())));
+                                  child: AddTaskScreen(
+                                    callBack: (newTaskTitle, newTaskParagraph) {
+                                      setState(() {
+                                        tasks.add(Task(
+                                            title: newTaskTitle,
+                                            paragraph: newTaskParagraph,
+                                            date: DateTime.now()));
+                                      });
+                                      Navigator.pop(context);
+                                    },
+                                  ))));
                     },
                     child: Icon(Icons.add)),
               ],

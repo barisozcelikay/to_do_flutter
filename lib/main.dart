@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:to_do/todoInfoScreen.dart';
-import 'package:to_do/todoScreen.dart';
+import 'package:to_do/Screens/taskInfoScreen.dart';
+import 'package:to_do/Screens/todoScreen.dart';
 
 void main() {
   runApp(const MyApp());

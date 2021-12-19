@@ -1,13 +1,13 @@
 // ignore: file_names
 // ignore_for_file: file_names
 
-class Todo {
+class Task {
   String title;
   String paragraph;
   DateTime date;
   bool isDone;
 
-  Todo(
+  Task(
       {required this.title,
       required this.paragraph,
       required this.date,
